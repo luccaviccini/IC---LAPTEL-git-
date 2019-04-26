@@ -11,16 +11,30 @@ def Main():
 
     dataframe = b"aa0100341e3644853600000041b10000392b0000e36ace7ce36a31830444000009c4000042c80000447a0000461c40003c12d43f"
     i = 0;
-    while i < 60:
-        t0 = time.time()
-        s.sendto(dataframe, server)
+    t0 = time.time()
+    print('T0: ', t0)
+    lista = []
 
+    while True:
+        listsize = len(lista)
+        s.sendto(dataframe, server)
+        lista.append(dataframe)
+
+
+        #time.sleep(0.01)
         #tf = time.time()
         i = i + 1
-    tf = time.time()
-    timediffClient = tf - t0
+        t1 = time.time()
 
-    print(timediffClient)
+        if listsize == 60:
+            break
+
+    tf = time.time()
+    s.close()
+
+    timediff = tf - t0
+    print('tempo total to loop: ', timediff)
+
 
 
 
