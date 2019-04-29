@@ -14,9 +14,12 @@ def Main():
     t = 0
     j = 0
 
+    x = input('Digite uma das taxas 10, 12, 15, 30 ou 60: ')
+    time_delay = 1/x
+
     while True:
         s.sendto(dataframe, server)
-        time.sleep(0.016)
+        time.sleep(time_delay)
         if t == 0:
             ti = time.time()
             t = 1
@@ -28,7 +31,7 @@ def Main():
             i = 0;
             #print(time.time())
             print('ENVIEI 60:   ', j)
-        if j == 3000:
+        if j == 10000:
             tf = time.time()
             break
 

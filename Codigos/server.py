@@ -28,7 +28,7 @@ def Main():
             i = 0;
             print(time.time())
             print('RECEBI 60:   ', j)
-        if j == 3000:
+        if j == 10000:
             tf = time.time()
             break
 
