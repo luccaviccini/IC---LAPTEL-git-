@@ -27,13 +27,24 @@ def Main():
     while True:
 
         data, addr = s.recvfrom(4096)
-        crc = C._crc16(data[0:-2], 0xFFFF, C.CRC16_XMODEM_TABLE)
-        print(hex(crc))
-
+        #inicio da contagem do tempo
         if t == 0:
             ti = time.time()
             t = 1
 
+        '''#calulando crc
+        crcdec = C._crc16(data[0:-2], 0xFFFF, C.CRC16_XMODEM_TABLE)
+        crc_calc = hex(crcdec)[2:]
+
+        #extraindo crc da mensagem
+        crc1 = hex(data[50])[2:]
+        crc2 = hex(data[51])[2:]
+        crc_orig = crc1 + crc2
+
+        if crc_calc != crc_orig:
+            print('HALELLUJAH')
+            print(j)
+'''
         i = i + 1
         j = j + 1
         if i == 60:
