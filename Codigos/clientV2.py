@@ -5,7 +5,7 @@ def Parametros():
 
         x = input('Digite uma das taxas de envio 10, 12, 15, 30 ou 60: ')
         x = float(x)
-        time_delay = 1/x
+        time_delay = 1/(1.1*x)
         # Para o socket
         client_ip = '10.15.1.132'
         client_port = 5001
@@ -13,7 +13,7 @@ def Parametros():
         server_ip = '10.15.1.132'
         server = (server_ip, server_port)
         #Se quiser colocar um limite no numero de frames enviados
-        maxenvio = 1200
+        maxenvio = 600
         return time_delay, client_ip, client_port, server_port, maxenvio, server_ip, server
 
 
