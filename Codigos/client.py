@@ -5,7 +5,8 @@ def Main():
     host = '192.168.0.105'
     client_port = 5001
     server_port = 5000
-    server = (host,server_port)
+    serverip = '192.168.0.105'
+    server = (serverip,server_port)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind((host, client_port))
 
@@ -15,7 +16,9 @@ def Main():
     j = 0
 
     x = input('Digite uma das taxas 10, 12, 15, 30 ou 60: ')
+    x = float(x)
     time_delay = 1/x
+
 
     while True:
         s.sendto(dataframe, server)
@@ -31,7 +34,7 @@ def Main():
             i = 0;
             #print(time.time())
             print('ENVIEI 60:   ', j)
-        if j == 10000:
+        if j == 600:
             tf = time.time()
             break
 
