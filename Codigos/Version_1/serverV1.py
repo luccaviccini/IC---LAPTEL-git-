@@ -2,7 +2,7 @@ import socket
 import time
 
 def Main():
-    host = '192.168.0.105'
+    host = '10.15.1.132'
     port = 5000
     server = (host,5000)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

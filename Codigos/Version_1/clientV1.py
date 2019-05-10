@@ -2,7 +2,7 @@ import socket
 import time
 
 def Main():
-    host = '192.168.0.105'
+    host = '10.15.1.132'
     client_port = 5001
     server_port = 5000
     serverip = '192.168.0.105'
