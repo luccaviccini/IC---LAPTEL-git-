@@ -5,12 +5,12 @@ def Parametros():
 
         x = input('Digite uma das taxas de envio 10, 12, 15, 30 ou 60: ')
         x = float(x)
-        time_delay = 1/(1.1*x)
+        time_delay = 1/(1.05*x)
         # Para o socket
-        client_ip = '10.15.2.26'
+        client_ip = '10.15.1.22'
         client_port = 5001
         server_port = 5000
-        server_ip = '10.15.2.26'
+        server_ip = '10.15.1.22'
         server = (server_ip, server_port)
         #Se quiser colocar um limite no numero de frames enviados
         maxenvio = 600
@@ -27,7 +27,7 @@ def Main():
     s = Cria_Socket()
     s.bind((client_ip, client_port))
 
-    dataframe = test = b'\xaa\x01\x00\x34\x1e\x36\x44\x85\x36\x00\x00\x00\x41\xb1\x00\x00\x39\x2b\x00\x00\xe3\x6a\xce\x7c\xe3\x6a\x31\x83\x04\x44\x00\x00\x09\xc4\x00\x00\x42\xc8\x00\x00\x44\x7a\x00\x00\x46\x1c\x40\x00\x3c\x12\xd4\x3f'
+    dataframe = b'\xaa\x01\x00\x34\x1e\x36\x44\x85\x36\x00\x00\x00\x41\xb1\x00\x00\x39\x2b\x00\x00\xe3\x6a\xce\x7c\xe3\x6a\x31\x83\x04\x44\x00\x00\x09\xc4\x00\x00\x42\xc8\x00\x00\x44\x7a\x00\x00\x46\x1c\x40\x00\x3c\x12\xd4\x3f'
     i = 0
     t = 0
     j = 0

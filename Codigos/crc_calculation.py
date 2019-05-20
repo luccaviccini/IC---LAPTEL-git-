@@ -1,6 +1,5 @@
 import binascii
-test = b'\xaa\x01\x00\x34\x1e\x36\x44\x85\x36\x00\x00\x00\x41\xb1\x00\x00\x39\x2b\x00\x00\xe3\x6a\xce\x7c\xe3\x6a\x31\x83\x04\x44\x00\x00\x09\xc4\x00\x00\x42\xc8\x00\x00\x44\x7a\x00\x00\x46\x1c\x40\x00\x3c\x12'
-
+data = b'\xaa\x01\x00\x34\x1e\x36\x44\x85\x36\x00\x00\x00\x41\xb1\x00\x00\x39\x2b\x00\x00\xe3\x6a\xce\x7c\xe3\x6a\x31\x83\x04\x44\x00\x00\x09\xc4\x00\x00\x42\xc8\x00\x00\x44\x7a\x00\x00\x46\x1c\x40\x00\x3c\x12\xd4\x3f'
 
 
 
@@ -54,23 +53,3 @@ def _crc16(data, crc, table):
         #byte = str(byte)
         crc = ((crc << 8) & 0xff00) ^ table[((crc >> 8) & 0xff) ^ byte]
     return crc & 0xffff
-
-'''def crc16xmodem(data, crc=0):
-    """Calculate CRC-CCITT (XModem) variant of CRC16.
-    `data`      - data for calculating CRC, must be bytes
-    `crc`       - initial value
-    Return calculated value of CRC
-    """
-    return _crc16(data, crc, CRC16_XMODEM_TABLE)
-<<<<<<< HEAD
-
-
-z = crc16xmodem(test)
-
-rr = _crc16(test, 0xFFFF, CRC16_XMODEM_TABLE)
-print(hex(rr))
-
-
-print(hex(z))
-=======
-'''

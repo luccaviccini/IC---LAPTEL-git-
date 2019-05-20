@@ -46,11 +46,19 @@ def update (num):
 
         # Convertendo as coordenadas
         angles, radius = car2pol (xps, yps)
-
+        print(radius)
+        maxvalue = max(radius)
+        print(maxvalue)
+        #radius = [x*(1/max) for x in radius]
+
+
+
+        #ax.set_ylim (0, np.max(radius))
+
         # Atualizando as setas com os novos valores
-        an0.xy = (angles [0], radius [0])
-        an1.xy = (angles [1], radius [1])
-        an2.xy = (angles [2], radius [2])
+        an0.xy = (angles [0], (radius [0])/maxvalue)
+        an1.xy = (angles [1], (radius [1])/maxvalue)
+        an2.xy = (angles [2], (radius [2])/maxvalue)
 
     return an0, an1, an2
 
@@ -59,10 +67,25 @@ def update (num):
 # podem ser modificados ao longo do tempo. Nesses comandos abaixo a figura base
 # está sendo criada. É importante que você defina aqui as escalas do gráfico,
 # que não poderão mudar ao longo do tempo.
+
+
+# criando lista secundaria
+'''
+for i in listax and j in listay:
+
+    lx2, ly2 = listax [:3], listay [:3]
+    theta, radius = car2pol(i, j)
+'''
+
+
 fig, ax = plt.subplots (subplot_kw = dict (polar=True))
-ax.set_ylim (0, 6)
+ax.set_ylim (0, 1)
 plt.title ('Tensoes')
-
+
+colors = ['green', 'blue', 'red']
+lines = [Line2D([0], [0], color=c, linewidth=3) for c in colors]
+labels = ['V1', 'V2', 'V3']
+plt.legend(lines, labels, loc = 'lower right')
 # Aqui estamos criando as setas (anotações), que serão modificadas em tempo
 # real. Essa setas estão sendo configuradas em termos de formato uma única vez,
 # e nesse primeiro momento elas estão todas nas coordenadas 0,0, por isso você
@@ -83,12 +106,12 @@ green = mpatches.Patch(color='green', label='V3')
 plt.legend(handles=[red, blue, green], loc = 'lower right')
 
 '''
-
+''''
 colors = ['green', 'blue', 'red']
 lines = [Line2D([0], [0], color=c, linewidth=3) for c in colors]
 labels = ['V1', 'V2', 'V3']
 plt.legend(lines, labels, loc = 'lower right')
-
+'''
 
 
 
@@ -96,5 +119,5 @@ plt.legend(lines, labels, loc = 'lower right')
 
 
 # Iniciando a animação. Você pode ajustar o interval para que a animação seja mais rápida ou lenta.
-anim = animation.FuncAnimation (fig, update, init_func = init, interval = 100, blit = False)
+anim = animation.FuncAnimation (fig, update, init_func = init, interval = 1000, blit = False)
 plt.show ()
