@@ -14,10 +14,11 @@ def Parametros(): ## Parametros a serem definidos antes do inicio do codigo
     server_ip = 'localhost'
     server_port = 5000
     server = (server_ip,5000)
-    maxrecebe = 300
+    maxrecebe = 108000
     return server_ip, server_port, server, maxrecebe
 
 def Main():
+
     server_ip, server_port, server, maxrecebe = Parametros()
 
     #criando socket
@@ -25,34 +26,25 @@ def Main():
     s.bind((server_ip, server_port))
 
     #contadores
-    t = 0
-    i = 0
-    j = 0
-    cntcrc = 0
-    cntplot = 1
+    t = 0 # contador para inicar a contagem do tempo
+    i = 0 # contador para contar 60 msg recebidas
+    j = 0 # contador maxrecebe
+    cntcrc = 0 # conta o numero de erros no crc
+    cdata = 0 # contador para o commit do banco de dados
+
     data = None
     print('Server Started. ')
 
     #criando banco de dados se ja nao existir
-
     conn = sqlite3.connect('PhasorDataConcentrator.db')
     c = conn.cursor()
 
-    def create_table():
+    def create_table(): # funcao para criar tabela dentro do banco de dados
         c.execute("CREATE TABLE IF NOT EXISTS teste(ModVa REAL, FaseVa REAL, ModVb REAL, FaseVb REAL, ModVc REAL,\
         FaseVc REAL)")
 
-    def dynamic_data_entry(ModVa,ModVb,ModVc,FaseVa,FaseVb,FaseVc):
-        ModVa = ModVa
-        ModVb = ModVb
-        ModVc = ModVc
-        FaseVa = FaseVa
-        FaseVb = FaseVb
-        FaseVc = FaseVc
-
+    def dynamic_data_entry(ModVa,ModVb,ModVc,FaseVa,FaseVb,FaseVc): # funcao para inserir valores na tabela do banco de dados
         c.execute("INSERT INTO teste(ModVa, FaseVa, ModVb, FaseVb, ModVc, FaseVc) VALUES (?, ?, ?, ?, ?, ?)", (ModVa, FaseVa, ModVb, FaseVb, ModVc, FaseVc))
-
-
 
     create_table()
 
@@ -77,7 +69,7 @@ def Main():
         # Contar qunatos CRCs deram errado e nao fazer nada com a mensagem
         if crc_calc != crc_orig:
             print('DEU MERDA NO CRC')
-            cntcrc = cntcrc + 1
+            cntcrc += 1
 
         #Para os que deram certo
 
@@ -90,18 +82,18 @@ def Main():
             v3y = hxm.Extrair_Msg(data,26,27)
 
             dynamic_data_entry(v1x,v2x,v3x,v1y,v2y,v3y)
+        # incrementando contadores
+        i += 1
+        j += 1
+        cdata += 1
 
-        # cntplot = cntplot + 1
-        i = i + 1
-        j = j + 1
         if i == 60:
-            conn.commit()
-
-            i = 0;
-            #print(time.time())
+            i = 0
             print('RECEBI 60:   ', j)
 
-
+        if cdata == 600:
+            conn.commit()
+            cdata = 0
 
         if j == maxrecebe:
             tf = time.time()
