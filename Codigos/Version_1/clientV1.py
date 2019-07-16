@@ -2,10 +2,10 @@ import socket
 import time
 
 def Main():
-    host = '10.15.1.132'
+    host = 'localhost'
     client_port = 5001
     server_port = 5000
-    serverip = '192.168.0.105'
+    serverip = 'localhost'
     server = (serverip,server_port)
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind((host, client_port))

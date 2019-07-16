@@ -1,3 +1,4 @@
+
 import socket
 import time
 import matplotlib.animation as animation
@@ -14,7 +15,7 @@ def Parametros(): ## Parametros a serem definidos antes do inicio do codigo
     server_ip = 'localhost'
     server_port = 5000
     server = (server_ip,5000)
-    maxrecebe = 108000
+    maxrecebe = 600
     return server_ip, server_port, server, maxrecebe
 
 def Main():
@@ -40,11 +41,11 @@ def Main():
     c = conn.cursor()
 
     def create_table(): # funcao para criar tabela dentro do banco de dados
-        c.execute("CREATE TABLE IF NOT EXISTS teste(ModVa REAL, FaseVa REAL, ModVb REAL, FaseVb REAL, ModVc REAL,\
-        FaseVc REAL)")
+        c.execute("CREATE TABLE IF NOT EXISTS teste(IdCode REAL, SOC REAL, FRACSEC REAL, STAT REAL, ModVa REAL, FaseVa REAL, ModVb REAL, FaseVb REAL, ModVc REAL, FaseVc REAL, I1x REAL, I1y REAL, FREQ REAL, DFREQ REAL)")
+        
 
-    def dynamic_data_entry(ModVa,ModVb,ModVc,FaseVa,FaseVb,FaseVc): # funcao para inserir valores na tabela do banco de dados
-        c.execute("INSERT INTO teste(ModVa, FaseVa, ModVb, FaseVb, ModVc, FaseVc) VALUES (?, ?, ?, ?, ?, ?)", (ModVa, FaseVa, ModVb, FaseVb, ModVc, FaseVc))
+    def dynamic_data_entry(IdCode,SOC,FRACSEC,STAT,ModVa,ModVb,ModVc,FaseVa,FaseVb,FaseVc,I1x,I1y,FREQ,DFREQ): # funcao para inserir valores na tabela do banco de dados
+        c.execute("INSERT INTO teste(IdCode, SOC, FRACSEC, STAT, ModVa, FaseVa, ModVb, FaseVb, ModVc, FaseVc, I1x, I1y, FREQ, DFREQ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (IdCode, SOC, FRACSEC, STAT, ModVa, FaseVa, ModVb, FaseVb, ModVc, FaseVc, I1x, I1y, FREQ, DFREQ))
 
     create_table()
 
@@ -74,14 +75,22 @@ def Main():
         #Para os que deram certo
 
         else:
+            pmuid = hxm.Extrair_Msg(data,4,5)
+            soc = hxm.Extrair_Msg4(data,6,7,8,9)
+            fracsec = hxm.Extrair_Msg3(data,11,12,13)
+            stat = hxm.Extrair_Msg(data,14,15)
             v1x = hxm.Extrair_Msg(data,16,17)
             v1y = hxm.Extrair_Msg(data,18,19)
             v2x = hxm.Extrair_Msg(data,20,21)
             v2y = hxm.Extrair_Msg(data,22,23)
             v3x = hxm.Extrair_Msg(data,24,25)
             v3y = hxm.Extrair_Msg(data,26,27)
+            i1x = hxm.Extrair_Msg(data,28,29)
+            i1y = hxm.Extrair_Msg(data,30,31)
+            freq = hxm.Extrair_Msg(data,32,33)
+            dfreq = hxm.Extrair_Msg(data,34,35)
 
-            dynamic_data_entry(v1x,v2x,v3x,v1y,v2y,v3y)
+            dynamic_data_entry(pmuid,soc,fracsec,stat,v1x,v2x,v3x,v1y,v2y,v3y,i1x,i1y,freq,dfreq)
         # incrementando contadores
         i += 1
         j += 1
