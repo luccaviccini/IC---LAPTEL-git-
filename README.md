@@ -1,2 +1,2 @@
-# IC---LAPTEL-git-
-base de dados para PMU
+# Monitoramento Serial e Base de Dados para PMU (Phasor Measuremnt Unit)
+
